@@ -64,7 +64,7 @@ public class RNNCoreAnnotations {
 
   public static List<Double> getPredictionsAsStringList(Tree tree) {
     SimpleMatrix predictions = getPredictions(tree);
-    List<Double> listOfPredictions = new ArrayList<Double>();
+    List<Double> listOfPredictions = new ArrayList<>();
     for (int i = 0 ; i < predictions.numRows() ; i++) {
       listOfPredictions.add(predictions.get(i));
     }
@@ -72,7 +72,7 @@ public class RNNCoreAnnotations {
   }
 
   /**
-   * Get the argmax of the class predicteions.
+   * Get the argmax of the class predictions.
    * The predicted classes can be an arbitrary set of non-negative integer classes,
    * but in our current sentiment models, the values used are on a 5-point
    * scale of 0 = very negative, 1 = negative, 2 = neutral, 3 = positive,
@@ -91,7 +91,15 @@ public class RNNCoreAnnotations {
    *  @return Either the sentiment level or -1 if none
    */
   public static int getPredictedClass(Tree tree) {
-    Label label = tree.label();
+    return getPredictedClass(tree.label());
+  }
+
+  /** Return as an int the predicted class. If it is not defined for a node,
+   *  it will return -1
+   *
+   *  @return Either the sentiment level or -1 if none
+   */
+  public static int getPredictedClass(Label label) {
     if (!(label instanceof CoreLabel)) {
       throw new IllegalArgumentException("CoreLabels required to get the attached predicted class");
     }
