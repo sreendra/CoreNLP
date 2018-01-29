@@ -90,7 +90,7 @@ import java.util.regex.Pattern;
  * <table>
  *   <tr><th>Field</th><th>Description</th><th>Default</th></tr>
  *   <tr><td>{@code mapping}</td><td>Comma separated list of mapping files to use </td>
- *      <td>{@code edu/stanford/nlp/models/regexner/type_map_clean}</td>
+ *      <td>{@code edu/stanford/nlp/models/kbp/regexner_caseless.tab}</td>
  *   </tr>
  *   <tr><td>{@code mapping.header}</td>
  *       <td>Comma separated list of header fields (or {@code true} if header is specified in the file)</td>
@@ -338,8 +338,8 @@ public class TokensRegexNERAnnotator implements Annotator  {
       TokenSequencePattern pattern;
 
       Boolean ignoreCaseEntry = ignoreCaseList.get(entryToMappingFileNumber.get(entry));
-      int patternFlags = ignoreCaseEntry? Pattern.CASE_INSENSITIVE:0;
-      int stringMatchFlags = ignoreCaseEntry? NodePattern.CASE_INSENSITIVE:0;
+      int patternFlags = ignoreCaseEntry? Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE:0;
+      int stringMatchFlags = ignoreCaseEntry? (NodePattern.CASE_INSENSITIVE | NodePattern.UNICODE_CASE):0;
       Env env = TokenSequencePattern.getNewEnv();
       env.setDefaultStringPatternFlags(patternFlags);
       env.setDefaultStringMatchFlags(stringMatchFlags);
